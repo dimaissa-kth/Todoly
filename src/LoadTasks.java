@@ -8,11 +8,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
-/**
- * A class that represent a task 
- */
 
-/**
+/** A calss that reads from a file and load as tasks and collect them in array list of task object
  * @author Dima Alissa
  */
 public class LoadTasks {
@@ -61,6 +58,7 @@ public class LoadTasks {
 
 				};
 		ArrayList<Task> ListOfTasks;
+		// To read from the file using buffer reader and format each line to a task object then collect all object in a new array list 
 		try {
 			ListOfTasks=Files.newBufferedReader(Paths.get(filename), Charset.forName("UTF-8")).lines()
 						.filter(record -> record.length() > 0 )

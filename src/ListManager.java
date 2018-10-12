@@ -80,13 +80,22 @@ public class ListManager {
 		if (y==0){System.out.println("There is no task on this date");}
 		}
 
-
+	/**
+	 *
+	 *Displays the tasks based on entered project 
+	 * @param selectedProject : entered project by user
+	 */
 	public void showTaskByProject(String selectedProject) {
 		listOfTasks.stream()
 				.filter(task -> task.getProject().equalsIgnoreCase(selectedProject))
 				.map(task -> task.getDetails())
 				.forEach(details -> System.out.println(details));
 	}
+	/**
+	 * To get a task based on its index
+	 * @param index of the task
+	 * @return Task
+	 */
 
 	public Task getTask(int index) {
 		if (checkTaskIndex(index)) {
@@ -97,6 +106,11 @@ public class ListManager {
 			return null;
 		}
 	}
+	/**
+	 * 
+	 * @param index of the task in the list of tasks
+	 * @return true if index is existed , false if it is not existed 
+	 */
 
 	boolean checkTaskIndex(int index) {
 		if (index >= 0 && index < listOfTasks.size()) {
@@ -105,7 +119,12 @@ public class ListManager {
 			return false;
 		}
 	}
-
+	/**
+	 * To write the list of tasks to the CSV file , located in the selected path  
+	 * @param selectedpath , the location of the created file 
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public void saveToCSV(String selectedpath) throws FileNotFoundException, UnsupportedEncodingException {
 	    File selectedPath = new File (selectedpath);
         try {
@@ -128,7 +147,11 @@ public class ListManager {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Check if the project index is valid
+	 * @param index : project index in the project list
+	 * @return true if index is valid , false if it is not existed  
+	 */
 	boolean checkProjectIndex(int index) {
 		if (index >= 0 && index < listOfProjects.size()) {
 			return true;
@@ -136,7 +159,11 @@ public class ListManager {
 			return false;
 		}
 	}
-
+	/**
+	 * get the project name
+	 * @param index of the project
+	 * @return the name of the project
+	 */
 	public String getProject(int index) {
 		if (checkProjectIndex(index)) {
 			String selectedProject = listOfProjects.get(index);
@@ -145,18 +172,26 @@ public class ListManager {
 			System.out.println("Project does Not exist ");
 			return null;
 		}
-
 	}
+	/**
+	 * Display list of projects
+	 */
 	public void showListOfProjects(){
 		for (String project : listOfProjects) {
 			System.out.println("No." + listOfProjects.indexOf(project)+" :"+project);
 		}
 	}
+	/**
+	 * Delete a task from the list of tasks
+	 * @param index of the task entered by the user
+	 */
 	public void deleteTask(int index){
 		System.out.println("This task will be deleted \n "+getTask(index).getDetails());
 		listOfTasks.remove(index);
 	}
-	//show tasks that are sorted by date ascending and categorized by Status
+	/**
+	 * show tasks that are sorted by date ascending and categorized by Status
+	 */
 	public void showAllTasksSorted() {
 		// to sort the task according to their dates
 		listOfTasks.sort(Comparator.comparing(Task::getDueDate));
@@ -178,12 +213,20 @@ public class ListManager {
 				.map(task -> task.getDetails())
 				.forEach(details -> System.out.println(details));
 			}
+	/**
+	 * Displays the tasks based on selected status
+	 * @param statusInput 
+	 */
 	public void showTaskByStatus(String statusInput){
         listOfTasks.stream()
                 .filter(task -> task.getStatus().equalsIgnoreCase(statusInput))
                 .map(task -> task.getDetails())
                 .forEach(details -> System.out.println(details));
     }
+	/**
+	 * Stored status with their numbers
+	 * @return HaskMap of status options 
+	 */
     public HashMap <Integer,String> statusOptions() {
         HashMap<Integer,String> statusOptions = new HashMap<Integer,String>();
         statusOptions.put(1,"DONE");
@@ -228,6 +271,9 @@ public class ListManager {
 		System.out.println("Project has been added successfully");
 
     }
+    /**
+     * To display the count of  each tasks grouped by their status   
+     */
     public void showTasksCount (){
 		long  count_of_done_tasks = listOfTasks.stream().filter(task -> task.getStatus().equalsIgnoreCase("DONE")).count();
 		System.out.println("YOU HAVE <<"+count_of_done_tasks+">> DONE TASKS");
@@ -236,6 +282,10 @@ public class ListManager {
 		long count_of_suspend_tasks=listOfTasks.stream().filter(task -> task.getStatus().equalsIgnoreCase("SUSPEND")).count();
 		System.out.println("YOU HAVE <<"+count_of_done_tasks+">> SUSPEND TASKS");
 	}
+    /**
+     * To check if the project list is empty ,
+     * @return true if there is no project in the list , false there is at least one project 
+     */
 	public boolean isListOfProjectsIsempty(){
     	if (listOfProjects.size()==0){
     		return true;

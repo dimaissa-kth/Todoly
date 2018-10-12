@@ -30,10 +30,17 @@ class ListManagerTest2 {
     }
 
     @Test
+    /**
+     * testing case when adding one task 
+     * @throws ParseException
+     */
     void addTaskToProjectOneTask() throws ParseException {
         addOneTaskWithSpecification();
     }
-
+    /**
+     * create one new tasks with values  
+     * @throws ParseException
+     */
     private void addOneTaskWithSpecification() throws ParseException {
         lmNoTasks.showListOfProjects();
         lmNoTasks.addTaskToProject(1,"task1","desc1",sf.parse("12/10/2019"),"Done");
@@ -45,6 +52,10 @@ class ListManagerTest2 {
     }
 
     @Test
+    /**
+     * testing when adding three tasks
+     * @throws ParseException
+     */
     void addTaskToProjectThreeTasks() throws ParseException {
        addOneTaskWithSpecification();
         lmNoTasks.addTaskToProject(2,"task2","desc2",sf.parse("12/11/2019"),"In progress");
@@ -63,8 +74,14 @@ class ListManagerTest2 {
     }
 
     @Test
+    /**
+     * testing when creating tasks with wrong inputs 
+     * wrong date 
+     * wrong status
+     * @throws ParseException
+     */
     void addTaskToProjectTwoWrongTasks() throws ParseException {
-        // undone is wrong
+        // undone staus  is wrong
         lmNoTasks.addTaskToProject(1,"task1","desc1",sf.parse("12/10/2019"),"undone");
         Task t1 = lmNoTasks.getTask(6);
         assertNull(t1);

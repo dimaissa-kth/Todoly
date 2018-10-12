@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  */
 public class Program {
-	/**
+	/** The Main Menu class 
 	 * @throws UnsupportedEncodingException 
 	 * @throws FileNotFoundException 
 	 * @param args
@@ -29,6 +29,7 @@ public class Program {
 	//instance of the List manager
 	static Scanner input = new Scanner(System.in);
 	static ListManager todoly = new ListManager(filename);
+	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		//set the lenient of simple date format to false (do not allow parsing in unwanted format)
 		//To navigate through the interface
@@ -81,17 +82,21 @@ public class Program {
 		input.close();
 	}
 
-	// To display the Main menu
+	/*
+	 * To display the Main menu
+	 */
 	static void userInterface(){
 		System.out.println("Choose an option from the menu");
 		System.out.println("1>> Enter Show Menu");
-		System.out.println("2>> Create A New Task");
+		System.out.println("2>> Create A New Task or Project");
 		System.out.println("3>> Modify A Task ");
 		System.out.println("4>> Delete A Task");
 		System.out.println("5>> Save AND Quit");
 
 	}
-	// To display the show options show all task or by date or by project
+	/*
+	 * To display the show options show all task or by date or by project
+	 */
 	static void showOption() throws InputMismatchException{
 		System.out.println("Choose an option from the menu");
 		System.out.println("1- Sort All Tasks By Date");
@@ -101,28 +106,31 @@ public class Program {
 		System.out.println("5-Return to Main Menu");
 		int i= input.nextInt();
 		switch (i){
-			case 1 :
+			case 1 :// Show Tasks that are sorted and grouped by their status
 				todoly.showAllTasksSorted();
 				break;
-			case 2 :
+			case 2 : //display tasks based on selected project
 				System.out.println("Show Task List by project, choose the project Name");
 				todoly.showListOfProjects();
 				int selectedProject = input.nextInt();
 				todoly.showTaskByProject(todoly.getProject(selectedProject));
 				break;
-			case 3 :
+			case 3 :// display tasks based on selected date 
 				System.out.println("Insert the date to show tasks by Use format (dd/mm/yyyy)");
 				todoly.showTaskByDate(userDateInput());
 				break;
-			case 4 :
+			case 4 :// display tasks based on selected status
 				todoly.showTaskByStatus(userStatusInput());
-			case 5:
+			case 5: // go back go main menu
 				break;
 			default:
 				System.out.println("Invalid Option Number");
 		}
 	}
-	//  create new task option
+	/**
+	 * create new option, Has two cases either to create a new task or create a new project
+	 * @throws InputMismatchException
+	 */
 	static void createOption() throws InputMismatchException{
 		System.out.println("Choose a number ");
 		System.out.println("1>>Add a new Task");
@@ -130,6 +138,7 @@ public class Program {
 		int i = input.nextInt();
 		input.nextLine();
 		switch (i){
+			//To create a new Task to an existing project
 			case 1 :
 				if (!todoly.isListOfProjectsIsempty()){
 					System.out.println("To Create a Task choose the project it belongs to");
@@ -155,6 +164,7 @@ public class Program {
 				}else{
 					System.out.println("You do not have any project , Add new project First");
 				}
+			// To create a new Project	
 			case 2 :
 				System.out.println("Enter new Project name :");
 				//input.nextLine();
@@ -167,10 +177,12 @@ public class Program {
 		}
 	}
 	/**
-	 *
+	 *Display the Modify options , to modify a task based on its index ,
+	 * new values should be entered otherwise old ones are used
 	 * @throws InputMismatchException
 	 */
 	static void modifyOption()throws InputMismatchException {
+		//
 		System.out.println("To Modify A Task Please Insert Task No: ");
 		todoly.showAllTask();
 		int index;
@@ -180,35 +192,40 @@ public class Program {
 		}while (!todoly.checkTaskIndex(index));
 		input.nextLine();
 		System.out.println(todoly.getTask(index).getDetails());
-
-		System.out.println("what do you want to change\n");
 		System.out.println("Do you want to change Task Project choose( y or n)");
 		String choice = input.nextLine();
 		if (choice.equalsIgnoreCase("y"))
 		{
 			project=userProjecInput();
+			input.nextLine();
 		}
 			else {
 			project = todoly.getTask(index).getProject();
 		}
-
-		System.out.print("Task New Name :");
-
+		
+		System.out.println("Do you want to change Task Name choose( y or n)");
+		choice = input.nextLine();
+		if (choice.equalsIgnoreCase("y"))
+		{
+			System.out.print("Task New Name :");
+			Scanner input = new Scanner(System.in);
+			name = input.nextLine();
+		}
+			else {
+			name = todoly.getTask(index).getName();
+		}
+		System.out.println("Do you want to change Task Description choose( y or n)");
 		Scanner input = new Scanner(System.in);
-		String taskname = input.nextLine();
-
-		System.out.print("Task New Description :");
-		String taskdescription = input.nextLine();
-
-        if (taskname.isEmpty()) {
-            name = todoly.getTask(index).getName();
-        }else {
-        	name =taskname;
+		choice = input.nextLine();
+		if (choice.equalsIgnoreCase("y"))
+		{	
+			System.out.print("Task New Description :");
+			description = input.nextLine();
 		}
-        if (taskdescription.isEmpty()) {
-            description = todoly.getTask(index).getDescription();
-        }else{	description=taskdescription;
+			else {
+			description = todoly.getTask(index).getDescription();
 		}
+		
 		System.out.println("Do you want to change Task Date choose( y or n)");
          choice = input.nextLine();
         if (choice.equalsIgnoreCase("y"))
@@ -218,15 +235,20 @@ public class Program {
         	dueDate = todoly.getTask(index).getDueDate();
 		}
 		System.out.println("Do you want to change Task Status choose( y or n)");
+		
 		 choice = input.nextLine();
 		if (choice.equalsIgnoreCase("y"))
-		{
+		{	
 			status= userStatusInput();
 		} else {
 			status = todoly.getTask(index).getStatus();
 		}
 		todoly.modifyTask(index,project,name,description, dueDate, status);
 	}
+	/**
+	 * To Delete a task based on its index (task Number) 
+	 * @throws InputMismatchException
+	 */
 	static void deleteOption()throws InputMismatchException{
 		System.out.println("Choose a Task to Delete ");
 		todoly.showAllTask();
@@ -254,6 +276,10 @@ public class Program {
 		}while (status==null);
 		return status;
 	}
+	/**
+	 * check the date which is entered by the user 
+	 * @return date : A valid Due date of the task 
+	 */
 	static Date userDateInput(){
 		df.setLenient(false);
 		do{
@@ -267,6 +293,11 @@ public class Program {
 		} while (dueDate==null);
 		return dueDate;
 	}
+	/**
+	 * displays all projects and check the user input to validate if the project index is existed
+	 * @return String the project name
+	 */
+	
 	static String userProjecInput(){
 		do{
 			todoly.showListOfProjects();
