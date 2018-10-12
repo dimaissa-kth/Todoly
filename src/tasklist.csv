@@ -1,6 +1,6 @@
-IP;taskname1;taskdesc;12/10/2018;suspend
-IP;heheh;llelel;15/12/2018;done
-SDN;gtt;efefewfe;07/11/2018;In progress
-SDN;gtt;efefewfe;07/01/2018;Done
-TeamUP;gtt;efefewfe;19/03/2018;suspend
-GOTO;gtt;efefewfe;27/09/2018;In progress
+IP;DIAGRAM;Create Class DIAGRAM;12/10/2018;SUSPEND
+IP;USECASE;create Use case Digram;15/12/2018;DONE
+ANDROID;MDOEL;CREATE MODEL;07/11/2018;In PROGESS
+WEBSHOP;DATABASE;Set up database connection;07/01/2018;Done
+TEAMUP;PROTOTYP;Create The first PROTOTYP;19/03/2018;SUSPEND
+RESEARCH;THEORY;Read THEORY;27/09/2018;In PROGRESS

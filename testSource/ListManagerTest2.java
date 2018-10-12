@@ -11,16 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ListManagerTest2 {
 
     private ListManager lmNoTasks;
-    private ListManager lmOneTask;
-    private ListManager lmThreeTasks;
     private SimpleDateFormat sf;
 
     @BeforeEach
     void setUp() {
         sf = new SimpleDateFormat("dd/MM/yyyy");
         lmNoTasks = new ListManager(Program.filename);
-        lmOneTask = new ListManager(Program.filename);
-        lmThreeTasks = new ListManager(Program.filename);
+
         String name = "taskname1";
     }
 
@@ -38,7 +35,7 @@ class ListManagerTest2 {
     }
 
     private void addOneTaskWithSpecification() throws ParseException {
-        lmNoTasks.loadListOfProjects();
+        lmNoTasks.showListOfProjects();
         lmNoTasks.addTaskToProject(1,"task1","desc1",sf.parse("12/10/2019"),"Done");
         Task t1 = lmNoTasks.getTask(6);
         assertEquals("SDN", t1.getProject());
@@ -71,7 +68,7 @@ class ListManagerTest2 {
         lmNoTasks.addTaskToProject(1,"task1","desc1",sf.parse("12/10/2019"),"undone");
         Task t1 = lmNoTasks.getTask(6);
         assertNull(t1);
-
+        // No due date , task can not be created
         lmNoTasks.addTaskToProject(1,"task2","desc2",null,"Done");
         Task t2 = lmNoTasks.getTask(7);
         assertNull(t2);

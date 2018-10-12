@@ -17,18 +17,19 @@ public class Task {
 	private Date dueDate=null;
 	private String status= null;
 
-	  /**
-     * Create a Task with its corresponding fields.
-     * @param project The project the task belongs to.
-     * @param name title of the task.
-     * @param description of the task.
-     * @param dueDate The due date of the task .
-     * @param status The state of the task wether its done or in progress. 
-     * 
-     */
+
 	  public Task(){
 
 	  }
+	/**
+	 * @constructor  of Task Class
+	 * @param project The project the task belongs to.
+	 * @param name title of the task.
+	 * @param description of the task.
+	 * @param dueDate The due date of the task .
+	 * @param status The state of the task wether its done or in progress.
+	 *
+	 */
 	public Task(String project,String name,String description,Date dueDate,String status) {
 	  	df.setLenient(false);
 		this.name=name;
@@ -78,6 +79,11 @@ public class Task {
 	
 		
 	}
+
+	/**
+	 * prepare the task with the wanted format to save in the CSV file
+	 * @return Sting that has Task fields with delimiter of ";"
+	 */
 	public String toCSVformat() {
 		return project+";"+name+";"+description+";"+df.format(dueDate)+";"+status+"\n";
 		
